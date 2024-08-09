@@ -1,35 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import PatientForm from "./components/PatientForm";
+import PatientList from "./components/PatientList";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className=" container mx-auto mt-20 ">
+        <h1 className=" font-black text-5xl text-center md:w-2/3 md:mx-auto">
+          Seguimiento de pacientes {""}{" "}
+          <span className="text-indigo-700">Veterinaria </span>{" "}
+        </h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div className="mt-12 md:flex">
+        <PatientForm />
+        <PatientList />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
