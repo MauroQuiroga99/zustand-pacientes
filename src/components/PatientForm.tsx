@@ -1,5 +1,5 @@
 import Error from "./Error";
-
+import type { DraftPatient } from "../types";
 import { useForm } from "react-hook-form";
 
 export default function PatientForm() {
@@ -7,9 +7,10 @@ export default function PatientForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const registerPatient = () => {};
-  console.log(registerPatient);
+  } = useForm<DraftPatient>();
+  const registerPatient = (data: DraftPatient) => {
+    console.log(data);
+  };
 
   return (
     <div className="md:w-1/2 lg:w-2/5 mx-5">
@@ -38,7 +39,7 @@ export default function PatientForm() {
               required: "El nombre del paciente es obligatorio",
             })}
           />
-          {errors.name && <Error>{errors.name?.message?.toString()}</Error>}
+          {errors.name && <Error>{errors.name?.message}</Error>}
         </div>
 
         <div className="mb-5">
@@ -54,9 +55,7 @@ export default function PatientForm() {
               required: "El Propietario es obligatorio",
             })}
           />
-          {errors.caretaker && (
-            <Error>{errors.caretaker?.message?.toString()}</Error>
-          )}
+          {errors.caretaker && <Error>{errors.caretaker?.message}</Error>}
         </div>
 
         <div className="mb-5">
@@ -76,7 +75,7 @@ export default function PatientForm() {
               },
             })}
           />
-          {errors.email && <Error>{errors.email?.message?.toString()}</Error>}
+          {errors.email && <Error>{errors.email?.message}</Error>}
         </div>
 
         <div className="mb-5">
@@ -91,7 +90,7 @@ export default function PatientForm() {
               required: "La fecha es obligatoria",
             })}
           />
-          {errors.date && <Error>{errors.date?.message?.toString()}</Error>}
+          {errors.date && <Error>{errors.date?.message}</Error>}
         </div>
 
         <div className="mb-5">
@@ -106,9 +105,7 @@ export default function PatientForm() {
               required: "Los sintomas son obligatorios",
             })}
           />
-          {errors.symptoms && (
-            <Error>{errors.symptoms?.message?.toString()}</Error>
-          )}
+          {errors.symptoms && <Error>{errors.symptoms?.message}</Error>}
         </div>
 
         <input
