@@ -1,17 +1,18 @@
 import { toast } from "react-toastify";
 import { Patient } from "../types";
 import PatientDetailItem from "./PatientDetailItem";
-import { usePatientStore } from "../store";
+import { useDispatch } from "react-redux";
+import { deletePatient, setCurrentPatient } from "../store/slices/patientSlice";
 
 type PatientDetailProps = {
   patient: Patient;
 };
 
 export default function PatientDetail({ patient }: PatientDetailProps) {
-  const deletePatient = usePatientStore((state) => state.deletePatient);
-  const getPatientById = usePatientStore((state) => state.getPatientById);
+  const dispatch = useDispatch();
+
   const handleClick = () => {
-    deletePatient(patient.id);
+    dispatch(deletePatient({ data: patient.id }));
     toast.error("Paciente Eliminado");
   };
 
@@ -28,7 +29,7 @@ export default function PatientDetail({ patient }: PatientDetailProps) {
         <button
           type="button"
           className="py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase rounded-lg"
-          onClick={() => getPatientById(patient.id)}
+          onClick={() => dispatch(setCurrentPatient({ data: patient.id }))}
         >
           Editar
         </button>

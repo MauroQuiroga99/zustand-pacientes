@@ -2,14 +2,15 @@ import Error from "./Error";
 import type { DraftPatient } from "../types";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { usePatientStore } from "../store";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addPatient, updatePatient } from "../store/slices/patientSlice";
+import { getActivePatientId, getPatients } from "../store/selectors/patient";
 
 export default function PatientForm() {
-  const addPatient = usePatientStore((state) => state.addPatient);
-  const activeId = usePatientStore((state) => state.activeId);
-  const patients = usePatientStore((state) => state.patients);
-  const updatePatient = usePatientStore((state) => state.updatePatient);
+  const dispatch = useDispatch();
+  const activeId = useSelector(getActivePatientId);
+  const patients = useSelector(getPatients);
 
   const {
     register,
@@ -24,6 +25,7 @@ export default function PatientForm() {
       const activePatient = patients.filter(
         (patient) => patient.id === activeId
       )[0];
+      if (activePatient == null) return;
       setValue("name", activePatient.name);
       setValue("caretaker", activePatient.caretaker);
       setValue("email", activePatient.email);
@@ -33,12 +35,12 @@ export default function PatientForm() {
   }, [activeId]);
   const registerPatient = (data: DraftPatient) => {
     if (activeId) {
-      updatePatient(data);
+      dispatch(updatePatient({ updateData: data }));
       toast.success("Paciente Actualizado Correctamente", {
         type: "success",
       });
     } else {
-      addPatient(data);
+      dispatch(addPatient({ data }));
       toast.success("Paciente Registrado");
     }
 

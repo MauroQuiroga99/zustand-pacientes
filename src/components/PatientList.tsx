@@ -1,9 +1,10 @@
-import { usePatientStore } from "../store";
+import { useSelector } from "react-redux";
 import PatientDetail from "./PatientDetail";
+import { getPatients } from "../store/selectors/patient";
 
 export default function PatientList() {
-  const patients = usePatientStore((state) => state.patients);
-  console.log(patients);
+  const patients = useSelector(getPatients);
+
   return (
     <div className="md:w-1/2 lg:w-3/5 md:h-screen overflow-y-auto">
       {patients.length ? (
